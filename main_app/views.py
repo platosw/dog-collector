@@ -1,4 +1,5 @@
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from django.shortcuts import render
 # from django.http import HttpResponse
 from .models import Dog
@@ -41,6 +42,10 @@ class DogIndex(ListView):
     model = Dog
     template_name = 'dogs/index.html'
 
-def dogs_detail(request, dog_id):
-    dog = Dog.objects.get(id=dog_id)
-    return render(request, 'dogs/detail.html', { 'dog': dog })
+# def dogs_detail(request, dog_id):
+#     dog = Dog.objects.get(id=dog_id)
+#     return render(request, 'dogs/detail.html', { 'dog': dog })
+
+class DogDetail(DetailView):
+    model = Dog
+    template_name = 'dogs/detail.html'
