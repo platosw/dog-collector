@@ -2,10 +2,11 @@
 
 {% block content %}
 
-<h3>Do you want to delete {{ dog.name }}?</h3>
-
-<form action="" method="delete">
+<h4>Are you sure you want to <span style="color: red;">delete</span> <span class="teal-text">{{ dog.name }}</span>?</h4>
+<form action="" method="POST">
+    {% csrf_token %}
     <input class="btn red" type="submit" value="YES">
+    <a href="{% url 'detail' dog.id %}">Cancel</a>
 </form>
 
 {% endblock %}
