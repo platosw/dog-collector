@@ -1,6 +1,3 @@
-from django.urls.resolvers import URLPattern
-
-
 from django.urls import path
 from . import views
 
@@ -12,4 +9,5 @@ urlpatterns = [
     path('dogs/', views.DogIndex.as_view(), name='index'),
     # path('dogs/<int:dog_id>/', views.dogs_detail, name='detail'),
     path('dogs/<int:pk>/', views.DogDetail.as_view(), name='detail'),
+    path('dogs/create/', views.DogCreate.as_view(), name='dogs_create'),
 ]
