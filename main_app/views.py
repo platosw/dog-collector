@@ -68,3 +68,7 @@ class DogDelete(DeleteView):
 class ToyIndex(ListView):
     model = Toy
     template_name = 'toys/index.html'
+
+class ToyDetail(DetailView):
+    model = Toy
+    template_name = 'toys/detail.html'

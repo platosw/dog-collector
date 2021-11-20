@@ -6,11 +6,12 @@
 
 {% for toy in object_list %}
 <div class="card">
-    <div class="card-contnt">
-        <span class="card-title">{{ toy.name }}</span>
-        <p>Name: {{ toy.name }}</p>
-        <p>Color: {{ toy.color }}</p>
-    </div>
+    <a href="{% url 'toy_detail' toy.id %}">
+        <div class="card-content">
+            <span class="card-title">{{ toy.name }}</span>
+            <p>Color: {{ toy.color }}</p>
+        </div>
+    </a>
 </div>
 {% endfor %}
 
