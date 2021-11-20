@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # from django.http import HttpResponse
-from .models import Dog
+from .models import Dog, Toy
 
 
 
@@ -64,3 +64,7 @@ class DogUpdate(UpdateView):
 class DogDelete(DeleteView):
     model = Dog
     success_url = '/dogs/'
+
+class ToyIndex(ListView):
+    model = Toy
+    template_name = 'toys/index.html'

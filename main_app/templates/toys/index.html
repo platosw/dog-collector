@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Toys List</h1>
+
+{% for toy in object_list %}
+<div class="card">
+    <div class="card-contnt">
+        <span class="card-title">{{ toy.name }}</span>
+        <p>Name: {{ toy.name }}</p>
+        <p>Color: {{ toy.color }}</p>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
