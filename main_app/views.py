@@ -72,3 +72,7 @@ class ToyIndex(ListView):
 class ToyDetail(DetailView):
     model = Toy
     template_name = 'toys/detail.html'
+
+class ToyCreate(CreateView):
+    model = Toy
+    fields = '__all__'

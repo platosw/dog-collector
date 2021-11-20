@@ -28,3 +28,6 @@ class Toy(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('toy_detail', kwargs={'pk': self.id})
