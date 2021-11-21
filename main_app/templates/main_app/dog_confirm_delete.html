@@ -5,7 +5,7 @@
 <h4>Are you sure you want to <span style="color: red;">delete</span> <span class="teal-text">{{ dog.name }}</span>?</h4>
 <form action="" method="POST">
     {% csrf_token %}
-    <input class="btn red" type="submit" value="YES">
+    <input class="btn red" type="submit" value="Delete">
     <a class="btn blue" href="{% url 'detail' dog.id %}">Cancel</a>
 </form>
 
