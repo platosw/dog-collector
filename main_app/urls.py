@@ -18,5 +18,3 @@ urlpatterns = [
     path('toys/<int:pk>/update/', views.ToyUpdate.as_view(), name="toy_update"),
     path('toys/<int:pk>/delete/', views.ToyDelete.as_view(), name="toy_delete"),
 ]
-
-# just for testing...
