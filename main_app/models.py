@@ -28,7 +28,7 @@ class Dog(models.Model):
 
 # Feeding model
 class Feeding(models.Model):
-    date = models.DateField()
+    date = models.DateField('Feeding Date')     # change Date: to Feeding Date: on admin page
     meal = models.CharField(
         max_length=1, 
         choices=MEALS, 
