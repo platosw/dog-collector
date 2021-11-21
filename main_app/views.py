@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -44,13 +44,24 @@ class DogIndex(ListView):
     model = Dog
     template_name = 'dogs/index.html'
 
-# def dogs_detail(request, dog_id):
-#     dog = Dog.objects.get(id=dog_id)
-#     return render(request, 'dogs/detail.html', { 'dog': dog })
+def dogs_detail(request, pk):
+    dog = Dog.objects.get(id=pk)
+    feeding_form = FeedingForm()
+    return render(request, 'dogs/detail.html', { 'dog': dog, 'feeding_form': feeding_form })
 
-class DogDetail(DetailView):
-    model = Dog
-    template_name = 'dogs/detail.html'
+# class DogDetail(DetailView):
+#     model = Dog, FeedingForm
+#     template_name = 'dogs/detail.html'
+
+def add_feeding(request, pk):
+    form = FeedingForm(request.POST)
+    print(form._errors)
+    if form.is_valid():
+            new_feeding = form.save(commit=False)
+            new_feeding.dog_id = pk
+            new_feeding.save()
+
+    return redirect('detail', pk=pk)
 
 class DogCreate(CreateView):
     model = Dog
