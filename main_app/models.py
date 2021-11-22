@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
 # Create your models here.
 
 MEALS = (
@@ -24,6 +25,11 @@ class Dog(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.id})
+
+    # new method
+    def fed_for_today(self):
+        return self.feeding_set.filter(date=date.today()).count() >= len(MEALS)
+        # return len( self.feeding_set.filter(date=date.today()) )
 
 
 # Feeding model

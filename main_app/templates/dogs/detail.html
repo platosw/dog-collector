@@ -30,6 +30,16 @@
             {{ feeding_form.as_p }}
             <input class="btn green" type="submit" value="Add Feeding">
         </form>
+        <br />
+        {% if dog.fed_for_today %}
+        <div class="card-panel teal-text center-align">
+            {{ dog.name }} has been fed enough meals for today.
+        </div>
+        {% else %}
+        <div class="card-panel red-text center-align">
+            {{ dog.name }} might be hungry.
+        </div>
+        {% endif %}
         <table class="striped">
             <thead>
                 <tr>
