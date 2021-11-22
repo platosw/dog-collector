@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # from django.http import HttpResponse
-from .models import Dog, Toy
+from .models import Dog, Toy, Feeding
 from .forms import FeedingForm
 
 
@@ -62,6 +62,11 @@ def add_feeding(request, pk):
             new_feeding.save()
 
     return redirect('detail', pk=pk)
+
+# class DeleteFeeding(DeleteView):
+#     model = Feeding
+#     fields = '__all__'
+#     success_url = '/dogs/'
 
 class DogCreate(CreateView):
     model = Dog
