@@ -6,10 +6,7 @@
 
 <div class="card">
     <div class="card-content">
-        <span class="card-title">{{ toy.name }}</span>
-        <p>Color: {{ toy.color }}</p>
-    </div>
-    <div class="card-content">
+        <span class="card-title"><span class="{{ toy.color }}-text">{{ toy.color }}</span> {{ toy.name }}</span>
         <p>Description: {{ toy.description }}</p>
     </div>
     <div class="card-action">

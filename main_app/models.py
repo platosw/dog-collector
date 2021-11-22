@@ -46,13 +46,13 @@ class Feeding(models.Model):
         return f'{self.get_meal_display()} on {self.date}'
     
     class Meta:
-        ordering = ['-date']
+        ordering = ['-date']    # order reversing feeding list's date
 
 
 # Toy model
 class Toy(models.Model):
     name = models.CharField(max_length=50)
-    color = models.CharField(max_length=20)
+    color =  models.CharField(max_length=20)
     description = models.TextField(max_length=500)
 
     def __str__(self):
