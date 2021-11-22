@@ -9,6 +9,18 @@ MEALS = (
     ('D', 'Dinner'),
 )
 
+# Toy model
+class Toy(models.Model):
+    name = models.CharField(max_length=50)
+    color =  models.CharField(max_length=20)
+    description = models.TextField(max_length=500)
+
+    # def __str__(self):
+    #     return self.name
+
+    def get_absolute_url(self):
+        return reverse('toy_detail', kwargs={'pk': self.id})
+
 # Dog model
 class Dog(models.Model):
     name = models.CharField(max_length=100)
@@ -16,6 +28,7 @@ class Dog(models.Model):
     gender = models.CharField(max_length=10)
     description = models.TextField(max_length=500)
     age = models.IntegerField()
+    toys = models.ManyToManyField(Toy)
 
     def __str__(self):
         return self.name
@@ -48,15 +61,3 @@ class Feeding(models.Model):
     class Meta:
         ordering = ['-date']    # order reversing feeding list's date
 
-
-# Toy model
-class Toy(models.Model):
-    name = models.CharField(max_length=50)
-    color =  models.CharField(max_length=20)
-    description = models.TextField(max_length=500)
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('toy_detail', kwargs={'pk': self.id})
