@@ -81,8 +81,22 @@
         <h3>Available Toys</h3>
         {% if notoys.count %}
             {% for toy in notoys %}
-            
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">
+                        A <span class="{{ toy.color.lower }}-text">{{ toy.color }}</span> {{ toy.name }}
+                    </span>
+                </div>
+                <div class="card-action">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn blue">Add</button>
+                    </form>
+                </div>
+            </div>
             {% endfor %}
+        {% else %}
+        <h5>{{ dog.name }} has all toys available</h5>
         {% endif %}
     </div>
 </div>
