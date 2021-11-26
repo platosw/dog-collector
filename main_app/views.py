@@ -47,7 +47,13 @@ class DogIndex(ListView):
 def dogs_detail(request, pk):
     dog = Dog.objects.get(id=pk)
     feeding_form = FeedingForm()
-    return render(request, 'dogs/detail.html', { 'dog': dog, 'feeding_form': feeding_form })
+    # exclude objects in my toys query that have pk's in this list [1, 4, 5]
+    dog_doesnt_have_toys = Toy.objects.exclude(id__in=dog.toys.all().values_list('id'))
+    return render(request, 'dogs/detail.html', { 
+        'dog': dog, 
+        'feeding_form': feeding_form, 
+        'notoys': dog_doesnt_have_toys,
+    })
 
 # class DogDetail(DetailView):
 #     model = Dog, FeedingForm

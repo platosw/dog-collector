@@ -77,6 +77,14 @@
             <h5>No Toys 😭</h5>
         {% endif %}
     </div>
+    <div class="col s6">
+        <h3>Available Toys</h3>
+        {% if notoys.count %}
+            {% for toy in notoys %}
+            
+            {% endfor %}
+        {% endif %}
+    </div>
 </div>
 <script>
     const dateEl = document.getElementById('id_date');
