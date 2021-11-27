@@ -28,7 +28,7 @@
         <form action="{% url 'add_feeding' dog.id %}" method="post">
             {% csrf_token %}
             {{ feeding_form.as_p }}
-            <input class="btn orange" type="submit" value="Add Feeding">
+            <input class="btn green" type="submit" value="Add Feeding">
         </form>
         <br />
         {% if dog.fed_for_today %}
@@ -52,7 +52,6 @@
                     <tr>
                         <td>{{ feeding.date }}</td>
                         <td>{{ feeding.get_meal_display }}</td>
-                        <td><a href="" style="color: red;">Delete</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
