@@ -19,4 +19,9 @@ urlpatterns = [
     path('toys/<int:pk>/delete/', views.ToyDelete.as_view(), name="toy_delete"),
     path('dogs/<int:pk>/add_feeding/', views.add_feeding, name='add_feeding'),
     # path('dogs/<int:pk>/delete_feeding/<int:feeding_id>', views.DeleteFeeding.as_view(), name='delete_feeding'),
+
+    # associate a toy with a dog
+    path('dogs/<int:pk>/assoc_toy/<int:fk>/', views.assoc_toy, name='assoc_toy'),
+    # unassociate a toy with a dog
+    path('dogs/<int:pk>/remove_assoc_toy/<int:fk>/', views.remove_assoc_toy, name='remove_assoc_toy'),
 ]

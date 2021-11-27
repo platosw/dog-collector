@@ -71,6 +71,12 @@
                         A <span class="{{toy.color.lower}}-text">{{ toy.color }}</span> {{ toy.name }}
                     </span>
                 </div>
+                <div class="card-action">
+                    <form action="{% url 'remove_assoc_toy' dog.id toy.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn red">Remove</button>
+                    </form>
+                </div>
             </div>
             {% endfor %}
         {% else %}
@@ -88,7 +94,7 @@
                     </span>
                 </div>
                 <div class="card-action">
-                    <form action="" method="post">
+                    <form action="{% url 'assoc_toy' dog.id toy.id %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn blue">Add</button>
                     </form>
