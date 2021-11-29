@@ -45,6 +45,13 @@ class Dog(models.Model):
         return self.feeding_set.filter(date=date.today()).count() >= len(MEALS)
         # return len( self.feeding_set.filter(date=date.today()) )
 
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Photo for dog_id: {self.dog_id} @{self.url}'
+
 
 # Feeding model
 class Feeding(models.Model):
