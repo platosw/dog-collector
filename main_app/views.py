@@ -3,8 +3,14 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # from django.http import HttpResponse
-from .models import Dog, Toy, Feeding
+from .models import Dog, Toy, Photo
 from .forms import FeedingForm
+
+import boto3
+import uuid
+
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'dogcollector-photo-uploads'
 
 
 
@@ -115,4 +121,22 @@ def assoc_toy(request, pk, fk):
 
 def remove_assoc_toy(request, pk, fk):
     Dog.objects.get(id=pk).toys.remove(fk)
+    return redirect('detail', pk=pk)
+
+def add_photo(request, pk):
+    photo_file = request.FILES.get('photo-file', None)
+    
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f'{S3_BASE_URL}{BUCKET}/{key}'
+            photo = Photo(url=url, dog_id=pk)
+            photo.save()
+        except Exception as error:
+            print(f'an error occurred uploading to AWS S3')
+            print(error)
+    
     return redirect('detail', pk=pk)

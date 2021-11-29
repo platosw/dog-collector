@@ -5,6 +5,22 @@
 
 <h1><span class="blue-text">{{ dog.name }}</span>'s Details</h1>
 <div class="row">
+    {% for photo in dog.photo_set.all %}
+    <img class="responsive-img card-panel" src="{{ photo.url }}" alt="{{ dog.name }}" />
+    {% empty %}
+    <div class="card-panel red-text center-align">No Photos</div>
+    {% endfor %}
+    <form
+        class="card-panel" 
+        action="{% url 'add_photo' dog.id %}" 
+        method="post" 
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="photo-file" />
+        <br>
+        <br>
+        <input type="submit" value="Upload Photo" />
+    </form>
     <div class="col s6">
         <div class="card">
             <div class="card-content">
