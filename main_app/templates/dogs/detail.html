@@ -30,7 +30,7 @@
         </div>
         <form class="card-panel" action="{% url 'add_photo' dog.id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="file" name="photo-file" />
+            <input type="file" multiple name="photo-file" />
             <br>
             <br>
             <input class="btn blue" type="submit" value="Upload Photo" />
