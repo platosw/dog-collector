@@ -26,4 +26,6 @@ urlpatterns = [
     path('dogs/<int:pk>/remove_assoc_toy/<int:fk>/', views.remove_assoc_toy, name='remove_assoc_toy'),
     # photo uploader
     path('dogs/<int:pk>/add_photo/', views.add_photo, name='add_photo'),
+    # authentication sign up
+    path('accounts/signup/', views.signup, name='signup'),
 ]

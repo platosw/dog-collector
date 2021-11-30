@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 # from django.http import HttpResponse
 from .models import Dog, Toy, Photo
 from .forms import FeedingForm
@@ -144,3 +146,22 @@ def add_photo(request, pk):
             print(error)
     
     return redirect('detail', pk=pk)
+
+# this view will GET and POST request
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        # handle the creation of a new user
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user) # this creates a session entry in the database and it persists that session sitewide until the user logs out
+            return redirect('index')
+        else:
+            error_message = 'invalid data - please try again'
+
+    else:
+        # this is for GET requests, assuming our user clicked on "signup" from the navbar
+        form = UserCreationForm()
+        context = {'form': form, 'error_message': error_message}
+        return render(request, 'registration/signup.html', context)
