@@ -83,6 +83,10 @@ def add_feeding(request, pk):
 class DogCreate(CreateView):
     model = Dog
     fields = ('name', 'breed', 'gender', 'description', 'age')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
     # success_url = '/dogs/'
 
 class DogUpdate(UpdateView):
