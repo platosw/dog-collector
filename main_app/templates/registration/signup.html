@@ -14,4 +14,11 @@
     <input class="btn blue" type="submit" value="Signup">
 </form>
 
+
+<style>
+    ul {
+        /* display: none; */
+        visibility: {% if error_message %} visible {% else %} hidden {% endif %};
+    }
+</style>
 {% endblock %}

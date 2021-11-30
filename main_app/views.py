@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 # from django.http import HttpResponse
@@ -48,10 +50,32 @@ def about(request):
 #     dogs = Dog.objects.all()
 #     return render(request, 'dogs/index.html', { 'dogs': dogs }) # context object
 
-class DogIndex(ListView):
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        # handle the creation of a new user
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user) # this creates a session entry in the database and it persists that session sitewide until the user logs out
+            return redirect('index')
+        else:
+            error_message = 'invalid data - please try again'
+
+    # this is for GET requests, assuming our user clicked on "signup" from the navbar
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)
+
+class DogIndex(LoginRequiredMixin, ListView):
     model = Dog
     template_name = 'dogs/index.html'
+    # displaying only the user's dogs
+    def get_queryset(self):
+        queryset = Dog.objects.filter(user=self.request.user)
+        return queryset
 
+@login_required
 def dogs_detail(request, pk):
     dog = Dog.objects.get(id=pk)
     feeding_form = FeedingForm()
@@ -82,7 +106,7 @@ def add_feeding(request, pk):
 #     fields = '__all__'
 #     success_url = '/dogs/'
 
-class DogCreate(CreateView):
+class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
     fields = ('name', 'breed', 'gender', 'description', 'age')
 
@@ -91,12 +115,12 @@ class DogCreate(CreateView):
         return super().form_valid(form)
     # success_url = '/dogs/'
 
-class DogUpdate(UpdateView):
+class DogUpdate(LoginRequiredMixin, UpdateView):
     model = Dog
     # fields = ('breed', 'gender', 'description', 'age')
     fields = '__all__'
 
-class DogDelete(DeleteView):
+class DogDelete(LoginRequiredMixin, DeleteView):
     model = Dog
     success_url = '/dogs/'
 
@@ -104,31 +128,34 @@ class ToyIndex(ListView):
     model = Toy
     template_name = 'toys/index.html'
 
-class ToyDetail(DetailView):
+class ToyDetail(LoginRequiredMixin, DetailView):
     model = Toy
     template_name = 'toys/detail.html'
 
-class ToyCreate(CreateView):
+class ToyCreate(LoginRequiredMixin, CreateView):
     model = Toy
     fields = '__all__'
 
-class ToyUpdate(UpdateView):
+class ToyUpdate(LoginRequiredMixin, UpdateView):
     model = Toy
     fields = '__all__'
 
-class ToyDelete(DeleteView):
+class ToyDelete(LoginRequiredMixin, DeleteView):
     model = Toy
     success_url = '/toys/'
 
+@login_required
 def assoc_toy(request, pk, fk):
     # Note that you can pass a toy's id instead of the whole object
     Dog.objects.get(id=pk).toys.add(fk)
     return redirect('detail', pk=pk)
 
+@login_required
 def remove_assoc_toy(request, pk, fk):
     Dog.objects.get(id=pk).toys.remove(fk)
     return redirect('detail', pk=pk)
 
+@login_required
 def add_photo(request, pk):
     photo_file = request.FILES.get('photo-file', None)
     
@@ -148,20 +175,20 @@ def add_photo(request, pk):
     return redirect('detail', pk=pk)
 
 # this view will GET and POST request
-def signup(request):
-    error_message = ''
-    if request.method == 'POST':
-        # handle the creation of a new user
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user) # this creates a session entry in the database and it persists that session sitewide until the user logs out
-            return redirect('index')
-        else:
-            error_message = 'invalid data - please try again'
+# def signup(request):
+#     error_message = ''
+#     if request.method == 'POST':
+#         # handle the creation of a new user
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user) # this creates a session entry in the database and it persists that session sitewide until the user logs out
+#             return redirect('index')
+#         else:
+#             error_message = 'invalid data - please try again'
 
-    else:
-        # this is for GET requests, assuming our user clicked on "signup" from the navbar
-        form = UserCreationForm()
-        context = {'form': form, 'error_message': error_message}
-        return render(request, 'registration/signup.html', context)
+#     else:
+#         # this is for GET requests, assuming our user clicked on "signup" from the navbar
+#         form = UserCreationForm()
+#         context = {'form': form, 'error_message': error_message}
+#         return render(request, 'registration/signup.html', context)

@@ -71,3 +71,8 @@ class Feeding(models.Model):
     class Meta:
         ordering = ['-date']    # order reversing feeding list's date
 
+class Owner(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
