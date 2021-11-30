@@ -24,5 +24,6 @@ urlpatterns = [
     path('dogs/<int:pk>/assoc_toy/<int:fk>/', views.assoc_toy, name='assoc_toy'),
     # unassociate a toy with a dog
     path('dogs/<int:pk>/remove_assoc_toy/<int:fk>/', views.remove_assoc_toy, name='remove_assoc_toy'),
+    # photo uploader
     path('dogs/<int:pk>/add_photo/', views.add_photo, name='add_photo'),
 ]
